@@ -259,11 +259,12 @@ class TranscriptListenerServer {
 
   async start() {
     const port = process.env.PORT || 3012;
-    
+    const host = process.env.HOST || '0.0.0.0'; // Listen on all interfaces for Docker access
+
     await this.initialize();
-    
-    this.server.listen(port, () => {
-      logger.info(`🎯 VoiceERP Transcript Listener running on port ${port}`);
+
+    this.server.listen(port, host, () => {
+      logger.info(`🎯 VoiceERP Transcript Listener running on ${host}:${port}`);
       logger.info(`📊 Health check: http://localhost:${port}/health`);
       logger.info(`🔌 WebSocket: ws://localhost:${port}/ws/transcripts`);
       logger.info(`📡 FreeSWITCH: ${process.env.FREESWITCH_HOST}:${process.env.FREESWITCH_PORT}`);
